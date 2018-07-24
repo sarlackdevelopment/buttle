@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Battle</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link href="Style.css" rel="stylesheet">
+        
+    </head>
+    <body>
+        
+<!--        <div style="display: flex; flex-direction: column-reverse;">
+
+            <div style="display: flex">
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: blue; margin: 2px;"></div>
+            </div>
+
+            <div style="display: flex">
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+            </div>
+
+            <div style="display: flex">
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+            </div>
+            
+            <div style="display: flex">
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+            </div>
+            
+            <div style="display: flex">
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+                <div style="width: 50px; height: 50px; background-color: green; margin: 2px;"></div>
+            </div>
+
+        </div>-->
+
+        
+        <script>
+            window.onload = function() {
+                
+                var horizontalSizeField = 10;
+                var verticalSizeField = 10;
+ 
+                var field = [[]];
+                
+                var columns = document.createElement('div');
+                columns.className = "columns";
+                document.body.appendChild(columns);
+                
+                for (var i = 0; i <= horizontalSizeField - 1; i++) {
+                                       
+                    var rows = document.createElement('div');
+                    rows.className = "rows";
+                    columns.appendChild(rows);
+                    
+                    for (var j = 0; j <= verticalSizeField - 1; j++) {
+                        
+                        var node = document.createElement('div');
+                        node.className = "emptyNode";
+                        node.id = i + "_" + j;
+                        rows.appendChild(node);
+                        
+                        field[i, j] = {
+                           shipPart: false,
+                           hasBitten: false
+                        };
+                        
+                    }
+                    
+                }
+                
+            };
+        </script>
+        
+        
+    </body>
+</html>

@@ -1,0 +1,16 @@
+
+.columns {
+    display: flex; 
+    flex-direction: column-reverse;
+}
+
+.rows {
+    display: flex;
+}
+
+.emptyNode {
+    width: 50px; 
+    height: 50px; 
+    background-color: blue; 
+    margin: 2px;
+}
