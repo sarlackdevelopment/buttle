@@ -1,6 +1,6 @@
 
-var horizontalSizeField = 10;
-var verticalSizeField = 10;
+var horizontalSizeField = 12;
+var verticalSizeField = 12;
 
 var quadrants = [[]];
 
@@ -39,21 +39,51 @@ function createField() {
         rows.className = "rows";
         columns.appendChild(rows);
 
+        var quadrantsHorizontal = [];
+
         for (var j = 0; j <= verticalSizeField - 1; j++) {
 
             var node = document.createElement('div');
-            node.className = "emptyNode";
+            
+            if ((i === 0 && j === 0) || (i === 0 && j === verticalSizeField - 1) || (i === horizontalSizeField - 1 && j === 0) || (i === horizontalSizeField - 1 && j === verticalSizeField - 1)) {
+                
+                node.className = "shoreAngle";
+                
+                quadrantsHorizontal[j] = {
+                    hasOccupied: true,
+                    hasBitten: false
+                }
+                
+            } else {
+                
+                if (i === 0 || i === horizontalSizeField - 1) {
+                    node.className = "shoreHorizontal";
+                } else if (j === 0 || j === verticalSizeField - 1) {
+                    node.className = "shoreVertical";
+                } else if (i === 0 && j === 0) {
+                    node.className = "shoreAngle";
+                } else {
+                    node.className = "emptyNode";
+                }
+                
+                quadrantsHorizontal[j] = {
+                    hasOccupied: false,
+                    hasBitten: false
+                }
+                
+            }                         
+             
+            quadrants[i] = quadrantsHorizontal;
+            
             node.id = i + "_" + j;
             rows.appendChild(node);
-
-            quadrants[i, j] = {
-                HereTheShip: false,
-                hasBitten: false
-            };
 
         }
 
     }
+    
+//    var stop;
+//    stop = 1;
 
 }
 
@@ -67,7 +97,8 @@ function position() {
 //        alert(currentShip.name);
 //    }
     var currentShip = popShip();
-    getTheFirstQuadrant(currentShip);
+    //getTheFirstQuadrant(currentShip);
+    createRandomShip(currentShip);
     
 }
 
@@ -118,56 +149,128 @@ function getDirection() {
     return Math.random() ? 'horizontal' : 'vertical';
 }
 
-function getTheFirstQuadrant(currentShip) {
+
+
+
+
+
+
+
+
+function createRandomShip(randomShip) {
     
-    //var sizeOfShip = currentShip.size; 
-    var indexOfSternHorizontal = Math.floor(Math.random() * horizontalSizeField);
-    var indexOfSternVertical = Math.floor(Math.random() * verticalSizeField);
-    var idOfStern = indexOfSternHorizontal + '_' + indexOfSternVertical;
+    if (!randomShip) {
+        return undefined;
+    }
     
-    moorShip(idOfStern);
+    var randomPosition = getRandomPosition();
+    var shipCanCreated = false;
+    var sizeShip       = randomShip.size;
+    var idOfShips      = [];
+    var index          = 0;    
     
-    //quadrants[indexOfSternHorizontal][indexOfSternVertical].HereTheShip = true;
+    while (!shipCanCreated) {       
+        
+        if (randomPosition.indexCol + sizeShip >= horizontalSizeField) {            
+            randomPosition = getRandomPosition();
+            idOfShips      = [];                
+            break;            
+        }
+                
+        for (var i = 0; i <= sizeShip - 1; i++){
+            
+            var currentIndex = randomPosition.indexCol + i;
+            
+            if (hasOccupied(randomPosition.indexRow, currentIndex)) {                
+                randomPosition = getRandomPosition();
+                idOfShips      = [];                
+                break;
+            }
+            
+            idOfShips[index] = randomPosition.indexCol + '_' + currentIndex;
+            index++;
+            
+            if (i === sizeShip - 1) {
+                shipCanCreated = true;   
+            }
+            
+        }
+        
+        for (var i = 0; i <= idOfShips.length - 1; i++) {
+            createPartOfShipByID(idOfShips[i]);
+            occupied(idOfShips[i]);                                  
+        }
+        
+    }
     
 }
 
-function creationByHorizontalIsPossible(indexOfSternHorizontal, indexOfSternVertical, shipSize) {
-   
-    if (indexOfSternHorizontal + shipSize + 1 > horizontalSizeField) {
-        return false;
+function getRandomPosition() {
+ 
+    var max = horizontalSizeField - 2;
+    var min = 1;
+    var indexRow = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    var max = verticalSizeField - 2;
+    var min = 1;
+    var indexCol = Math.floor(Math.random() * (max - min + 1)) + min;
+    
+    return {
+        'indexRow': indexRow, 
+        'indexCol': indexCol
+    };
+    
+}
+
+function hasOccupied(indexRow, indexCol) {
+    
+    if (quadrants[indexRow + 1][indexCol - 1].hasOccupied) {
+        return true;
     }
-    ;
-    if (indexOfSternVertical === 0) {
-        if (quadrants[indexOfSternHorizontal][indexOfSternVertical + 1].HereTheShip) {
-            return false;
-        }
-        ;
-        if (quadrants[indexOfSternHorizontal + 1][indexOfSternVertical].HereTheShip) {
-            return false;
-        }
-        ;
-        if (quadrants[indexOfSternHorizontal + 1][indexOfSternVertical + 1].HereTheShip) {
-            return false;
-        }
-        ;
+    
+    if (quadrants[indexRow + 1][indexCol].hasOccupied) {
+        return true;
     }
-    ;
-    if (indexOfSternVertical === verticalSizeField) {
-        if (quadrants[indexOfSternHorizontal][indexOfSternVertical - 1].HereTheShip) {
-            return false;
-        }
-        ;
-        if (quadrants[indexOfSternHorizontal + 1][indexOfSternVertical].HereTheShip) {
-            return false;
-        }
-        ;
-        if (quadrants[indexOfSternHorizontal + 1][indexOfSternVertical + 1].HereTheShip) {
-            return false;
-        }
-        ;
+    
+    if (quadrants[indexRow + 1][indexCol + 1].hasOccupied) {
+        return true;
     }
+    
+    if (quadrants[indexRow][indexCol - 1].hasOccupied) {
+        return true;
+    }
+    
+    if (quadrants[indexRow][indexCol].hasOccupied) {
+        return true;
+    }
+    
+    if (quadrants[indexRow][indexCol + 1].hasOccupied) {
+        return true;
+    }
+    
+    if (quadrants[indexRow - 1][indexCol - 1].hasOccupied) {
+        return true;
+    }
+    
+    if (quadrants[indexRow - 1][indexCol].hasOccupied) {
+        return true;
+    }
+    
+    if (quadrants[indexRow - 1][indexCol + 1].hasOccupied) {
+        return true;
+    }
+    
+    return false;
 
 }
 
-
+function occupied(id) {
+    
+    var partOfID    = id.split("_");
+    var firstIndex  = parseInt(partOfID[0]);
+    var secondIndex = parseInt(partOfID[1]);
+    
+    quadrants[firstIndex][secondIndex].hasOccupied = true;
+    
+}
 
