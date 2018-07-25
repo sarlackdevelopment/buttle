@@ -1,29 +1,49 @@
 
+
+// 1. Залить море 12x12. При этом края-берега считаются занятыми по умолчанию. 
+// 2. Решить вертикально или горизонтально стоит очередной корабль.
+// 3. Для горизонтального варианта взять очередной корабль:
+// 3.1. Найти положение кормы корабля - случайным образом, для этого:
+// 3.1.1. Взять случайную точку на поле. Горизонталь равна i, вертикаль равна j. 
+// 3.1.2. Проверить является ли она занятой.
+// 3.1.3. Если является, то очистить массив ShipsId вернуться к пункту 3.1.1.
+// 3.1.4. Если нет, то добавить в массив ShipsId id вида: i + "_" + j, для идентификации на поле.
+// 3.1.5. Если умещаем весь корабль, то есть j равно длине корабля, тогда переход к пункту 3.
+// 3.1.5. Если корабль еще не "кончился", то увеличить j на единицу, теперь j = j + 1.
+// 3.1.6. Вернуться к пункту 3.1.2.
+
+
 var horizontalSizeField = 12;
 var verticalSizeField = 12;
 
 var quadrants = [[]];
 
 var ships = [
-    {
-        name: 'flagship', 
-        count: 1,
-        size: 4
-    }, 
+//    {
+//        name: 'flagship', 
+//        count: 1,
+//        size: 4
+//    }, 
+//    {
+//        name: 'cruiser', 
+//        count: 2,
+//        size: 3
+//    }, 
+//    {
+//        name: 'largeBoat', 
+//        count: 3,
+//        size: 2
+//    }, 
+//    {
+//        name: 'smallBoat', 
+//        count: 4,
+//        size: 1
+//    }
+
     {
         name: 'cruiser', 
         count: 2,
         size: 3
-    }, 
-    {
-        name: 'largeBoat', 
-        count: 3,
-        size: 2
-    }, 
-    {
-        name: 'smallBoat', 
-        count: 4,
-        size: 1
     }
 ];
 
@@ -45,7 +65,9 @@ function createField() {
 
             var node = document.createElement('div');
             
-            if ((i === 0 && j === 0) || (i === 0 && j === verticalSizeField - 1) || (i === horizontalSizeField - 1 && j === 0) || (i === horizontalSizeField - 1 && j === verticalSizeField - 1)) {
+            if ((i === 0 && j === 0) || (i === 0 && j === verticalSizeField - 1) 
+                || (i === horizontalSizeField - 1 && j === 0) 
+                || (i === horizontalSizeField - 1 && j === verticalSizeField - 1)) {
                 
                 node.className = "shoreAngle";
                 
@@ -56,18 +78,20 @@ function createField() {
                 
             } else {
                 
+                var hasOccupied = false;
+                
                 if (i === 0 || i === horizontalSizeField - 1) {
                     node.className = "shoreHorizontal";
+                    hasOccupied = true;
                 } else if (j === 0 || j === verticalSizeField - 1) {
                     node.className = "shoreVertical";
-                } else if (i === 0 && j === 0) {
-                    node.className = "shoreAngle";
+                    hasOccupied = true;
                 } else {
                     node.className = "emptyNode";
                 }
                 
                 quadrantsHorizontal[j] = {
-                    hasOccupied: false,
+                    hasOccupied: hasOccupied,
                     hasBitten: false
                 }
                 
